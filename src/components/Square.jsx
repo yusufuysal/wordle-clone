@@ -1,4 +1,3 @@
-// eslint-disable-next-line react/prop-types
 const Square = ({ matchLevel, children }) => {
   let bgColor = "#fff";
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./App.css";
+import Button from "./components/Button";
 import GameBoard from "./components/GameBoard";
 import GuessForm from "./components/GuessForm";
 import { words } from "./utils/wordsData";
@@ -39,6 +40,7 @@ function App() {
 
   function closeModal() {
     setIsModalOpen(false);
+    handleResetBoard();
   }
 
   function handleResetBoard() {
@@ -49,7 +51,6 @@ function App() {
     setAnswer(randomWord);
   }
 
-  // eslint-disable-next-line react/prop-types
   useEffect(() => {
     if (allGuesses.includes(answer)) {
       setHasWon(true);
@@ -76,14 +77,17 @@ function App() {
         contentLabel="Example Modal"
       >
         {hasWon ? (
-          <div>
-            <h3>You Win !!!</h3>
-            <button onClick={handleResetBoard}>Play Again</button>
+          <div className="modal-container">
+            <h3>You Win !</h3>
+            <Button onClick={handleResetBoard}>Play Again</Button>
           </div>
         ) : (
-          <div>
+          <div className="modal-container">
             <h3>You lost:( </h3>
-            <button onClick={handleResetBoard}>Try Again!</button>
+            <div className="lost-modal-btns">
+              <Button onClick={handleResetBoard}>Try Again!</Button>
+              <Button onClick={handleResetBoard}>Change the word</Button>
+            </div>
           </div>
         )}
       </Modal>

@@ -1,9 +1,6 @@
-// eslint-disable-next-line react/prop-types
 const GuessForm = ({ guess, setGuess, allGuesses, setAllGuesses }) => {
   function handleSubmit(event) {
     event.preventDefault();
-
-    // eslint-disable-next-line react/prop-types
 
     const newGuessesArray = [...allGuesses, guess];
     setAllGuesses(newGuessesArray);

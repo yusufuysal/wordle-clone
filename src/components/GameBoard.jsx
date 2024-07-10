@@ -1,16 +1,12 @@
 import Square from "./Square";
 
-// eslint-disable-next-line react/prop-types
 const GameBoard = ({ allGuesses, answer }) => {
   const rows = [
     ...allGuesses,
-    // eslint-disable-next-line react/prop-types
     ...Array.from({ length: 6 - allGuesses.length }, () => ""),
   ];
 
   const cols = Array.from({ length: 5 }, () => "");
-
-  // eslint-disable-next-line react/prop-types
   const answerLetters = answer.split("");
 
   return (
@@ -27,8 +23,7 @@ const GameBoard = ({ allGuesses, answer }) => {
                     ? answerLetters[colIndex] === letter
                       ? "perfect"
                       : "loose"
-                    : // eslint-disable-next-line react/prop-types
-                      rowIndex < allGuesses.length && "none"
+                    : rowIndex < allGuesses.length && "none"
                 }
               >
                 {letter}
