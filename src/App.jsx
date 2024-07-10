@@ -4,13 +4,18 @@ import GameBoard from "./components/GameBoard";
 import GuessForm from "./components/GuessForm";
 
 function App() {
-  const answer = "berna";
+  const answer = "yusuf";
 
   const [guess, setGuess] = useState("");
   const [allGuesses, setAllGuesses] = useState([]);
 
   if (allGuesses.length === 6) {
-    window.alert("Game is over!");
+    window.alert("You lost:( Try again!");
+  }
+
+  // eslint-disable-next-line react/prop-types
+  if (allGuesses.includes(answer)) {
+    window.alert("You Win !!!");
   }
 
   return (

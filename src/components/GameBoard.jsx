@@ -6,29 +6,30 @@ const GameBoard = ({ allGuesses, answer }) => {
   const rows = [
     ...allGuesses,
     // eslint-disable-next-line react/prop-types
-    ...Array.from({ length: 6 - allGuesses.length }, () => "R"),
+    ...Array.from({ length: 6 - allGuesses.length }, () => ""),
   ];
 
-  const cols = Array.from({ length: 5 }, () => "C");
+  const cols = Array.from({ length: 5 }, () => "");
 
   // eslint-disable-next-line react/prop-types
   const answerLetters = answer.split("");
 
   return (
     <div>
-      {rows.map((row, index) => (
-        <div key={index} className={styles.row}>
-          {cols.map((col, index) => {
-            const letter = row.split("")[index];
+      {rows.map((row, rowIndex) => (
+        <div key={rowIndex} className={styles.row}>
+          {cols.map((col, colIndex) => {
+            const letter = row.split("")[colIndex];
             return (
               <Square
-                key={index}
+                key={colIndex}
                 matchLevel={
                   answerLetters.includes(letter)
-                    ? answerLetters[index] === letter
+                    ? answerLetters[colIndex] === letter
                       ? "perfect"
                       : "loose"
-                    : "none"
+                    : // eslint-disable-next-line react/prop-types
+                      rowIndex < allGuesses.length && "none"
                 }
               >
                 {letter}
