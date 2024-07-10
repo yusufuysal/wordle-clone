@@ -1,25 +1,67 @@
-import { useState } from "react";
-import styles from "./App.module.css";
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import "./App.css";
 import GameBoard from "./components/GameBoard";
 import GuessForm from "./components/GuessForm";
+import { words } from "./utils/wordsData";
+
+Modal.setAppElement("#root");
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 function App() {
-  const answer = "yusuf";
-
+  const [answer, setAnswer] = useState("");
   const [guess, setGuess] = useState("");
   const [allGuesses, setAllGuesses] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasWon, setHasWon] = useState(false);
 
-  if (allGuesses.length === 6) {
-    window.alert("You lost:( Try again!");
+  function generateRandomWord() {
+    return words[Math.floor(Math.random() * words.length)];
+  }
+
+  useEffect(() => {
+    console.log("here!!");
+    const randomWord = generateRandomWord();
+    setAnswer(randomWord);
+  }, []);
+
+  console.log(answer);
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
+
+  function handleResetBoard() {
+    setIsModalOpen(false);
+    setGuess("");
+    setAllGuesses([]);
+    const randomWord = generateRandomWord();
+    setAnswer(randomWord);
   }
 
   // eslint-disable-next-line react/prop-types
-  if (allGuesses.includes(answer)) {
-    window.alert("You Win !!!");
-  }
+  useEffect(() => {
+    if (allGuesses.includes(answer)) {
+      setHasWon(true);
+      setIsModalOpen(true);
+    } else if (allGuesses.length === 6) {
+      setHasWon(false);
+      setIsModalOpen(true);
+    }
+  }, [allGuesses, answer]);
 
   return (
-    <main className={styles.container}>
+    <main className="container">
       <GameBoard allGuesses={allGuesses} answer={answer} />
       <GuessForm
         guess={guess}
@@ -27,6 +69,24 @@ function App() {
         allGuesses={allGuesses}
         setAllGuesses={setAllGuesses}
       />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        {hasWon ? (
+          <div>
+            <h3>You Win !!!</h3>
+            <button onClick={handleResetBoard}>Play Again</button>
+          </div>
+        ) : (
+          <div>
+            <h3>You lost:( </h3>
+            <button onClick={handleResetBoard}>Try Again!</button>
+          </div>
+        )}
+      </Modal>
     </main>
   );
 }

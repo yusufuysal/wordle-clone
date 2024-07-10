@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    min-height: 100vh;
+    padding-top: 10rem;
+}
+
+.row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal {
+    top: '50%';
+    left: '50%';
+    right: 'auto';
+    bottom: 'auto';
+    margin-right: '-50%';
+    transform: 'translate(-50%, -50%)';
+}
+
+.label {
+    display: block;
+}
+
+.input {
+    width: 20rem;
+    height: 4rem;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+}
+
+.box {
+    width: 4rem;
+    height: 4rem;
+    border: 2px solid #d3d6da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+}

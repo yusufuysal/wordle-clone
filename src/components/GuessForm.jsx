@@ -1,4 +1,3 @@
-import styles from "./GuessForm.module.css";
 // eslint-disable-next-line react/prop-types
 const GuessForm = ({ guess, setGuess, allGuesses, setAllGuesses }) => {
   function handleSubmit(event) {
@@ -13,11 +12,11 @@ const GuessForm = ({ guess, setGuess, allGuesses, setAllGuesses }) => {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <label className={styles.label} htmlFor="guess">
+      <label className="label" htmlFor="guess">
         Enter guess:
       </label>
       <input
-        className={styles.input}
+        className="input"
         type="text"
         minLength="5"
         maxLength="5"

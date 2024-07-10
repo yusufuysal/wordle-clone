@@ -1,5 +1,3 @@
-import styles from "./Square.module.css";
-
 // eslint-disable-next-line react/prop-types
 const Square = ({ matchLevel, children }) => {
   let bgColor = "#fff";
@@ -14,7 +12,7 @@ const Square = ({ matchLevel, children }) => {
 
   return (
     <div
-      className={styles.box}
+      className="box"
       style={{
         backgroundColor: bgColor,
       }}

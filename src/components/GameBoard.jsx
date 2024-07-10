@@ -1,4 +1,3 @@
-import styles from "./GameBoard.module.css";
 import Square from "./Square";
 
 // eslint-disable-next-line react/prop-types
@@ -17,7 +16,7 @@ const GameBoard = ({ allGuesses, answer }) => {
   return (
     <div>
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className={styles.row}>
+        <div key={rowIndex} className="row">
           {cols.map((col, colIndex) => {
             const letter = row.split("")[colIndex];
             return (
