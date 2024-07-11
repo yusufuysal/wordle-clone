@@ -50,3 +50,7 @@ export const words = [
   "woven",
   "yield",
 ];
+
+export function generateRandomWord() {
+  return words[Math.floor(Math.random() * words.length)];
+}

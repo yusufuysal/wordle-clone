@@ -3,9 +3,9 @@ const Square = ({ matchLevel, children }) => {
 
   if (matchLevel === "perfect") {
     bgColor = "#6aaa64";
-  } else if (matchLevel === "loose") {
+  } else if (matchLevel === "good") {
     bgColor = "#c9b458";
-  } else if (matchLevel === "none") {
+  } else if (matchLevel === "bad") {
     bgColor = "grey";
   }
 

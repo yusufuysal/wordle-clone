@@ -22,8 +22,8 @@ const GameBoard = ({ allGuesses, answer }) => {
                   answerLetters.includes(letter)
                     ? answerLetters[colIndex] === letter
                       ? "perfect"
-                      : "loose"
-                    : rowIndex < allGuesses.length && "none"
+                      : "good"
+                    : rowIndex < allGuesses.length && "bad"
                 }
               >
                 {letter}

@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Modal from "react-modal";
 import "./App.css";
 import Button from "./components/Button";
 import GameBoard from "./components/GameBoard";
 import GuessForm from "./components/GuessForm";
-import { words } from "./utils/wordsData";
+import useGameState from "./hooks/useGameState";
+import useModal from "./hooks/useModal";
 
 Modal.setAppElement("#root");
+
+// resetBoard function => it resets the board but cant close the modal but it should
+// close modal => can close it but could not reset the board
 
 const customStyles = {
   content: {
@@ -20,46 +24,30 @@ const customStyles = {
 };
 
 function App() {
-  const [answer, setAnswer] = useState("");
-  const [guess, setGuess] = useState("");
-  const [allGuesses, setAllGuesses] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasWon, setHasWon] = useState(false);
-
-  function generateRandomWord() {
-    return words[Math.floor(Math.random() * words.length)];
-  }
-
-  useEffect(() => {
-    console.log("here!!");
-    const randomWord = generateRandomWord();
-    setAnswer(randomWord);
-  }, []);
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const {
+    answer,
+    guess,
+    setGuess,
+    allGuesses,
+    setAllGuesses,
+    hasWon,
+    resetBoard,
+  } = useGameState();
 
   console.log(answer);
 
-  function closeModal() {
-    setIsModalOpen(false);
-    handleResetBoard();
-  }
-
-  function handleResetBoard() {
-    setIsModalOpen(false);
-    setGuess("");
-    setAllGuesses([]);
-    const randomWord = generateRandomWord();
-    setAnswer(randomWord);
-  }
-
   useEffect(() => {
-    if (allGuesses.includes(answer)) {
-      setHasWon(true);
-      setIsModalOpen(true);
-    } else if (allGuesses.length === 6) {
-      setHasWon(false);
-      setIsModalOpen(true);
+    if (hasWon || allGuesses.length === 6) {
+      openModal();
     }
-  }, [allGuesses, answer]);
+  }, [allGuesses, hasWon]);
+
+  const handleResetAndClose = (isSameWord) => {
+    console.log("is same word: ", isSameWord);
+    resetBoard(isSameWord);
+    closeModal();
+  };
 
   return (
     <main className="container">
@@ -72,21 +60,25 @@ function App() {
       />
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={closeModal}
+        onRequestClose={() => handleResetAndClose()}
         style={customStyles}
         contentLabel="Example Modal"
       >
         {hasWon ? (
           <div className="modal-container">
             <h3>You Win !</h3>
-            <Button onClick={handleResetBoard}>Play Again</Button>
+            <Button onClick={() => handleResetAndClose()}>Play Again</Button>
           </div>
         ) : (
           <div className="modal-container">
             <h3>You lost:( </h3>
             <div className="lost-modal-btns">
-              <Button onClick={handleResetBoard}>Try Again!</Button>
-              <Button onClick={handleResetBoard}>Change the word</Button>
+              <Button onClick={() => handleResetAndClose(true)}>
+                Try Again!
+              </Button>
+              <Button onClick={() => handleResetAndClose()}>
+                Change the word
+              </Button>
             </div>
           </div>
         )}
