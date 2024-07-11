@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { generateRandomWord } from "../utils/wordsData";
 
 const useGameState = () => {
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState(generateRandomWord());
   const [guess, setGuess] = useState("");
   const [allGuesses, setAllGuesses] = useState([]);
   const [hasWon, setHasWon] = useState(false);
-
-  useEffect(() => {
-    setAnswer(generateRandomWord());
-  }, []);
 
   useEffect(() => {
     if (allGuesses.includes(answer)) {

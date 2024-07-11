@@ -22,6 +22,7 @@ const customStyles = {
 
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
+
   const {
     answer,
     guess,

@@ -13,15 +13,6 @@
     margin-bottom: 0.5rem;
 }
 
-.modal {
-    top: '50%';
-    left: '50%';
-    right: 'auto';
-    bottom: 'auto';
-    margin-right: '-50%';
-    transform: 'translate(-50%, -50%)';
-}
-
 .modal-container {
     display: flex;
     flex-direction: column;

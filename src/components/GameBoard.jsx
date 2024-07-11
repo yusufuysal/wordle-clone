@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Square from "./Square";
 
 const GameBoard = ({ allGuesses, answer }) => {
@@ -7,7 +8,31 @@ const GameBoard = ({ allGuesses, answer }) => {
   ];
 
   const cols = Array.from({ length: 5 }, () => "");
-  const answerLetters = answer.split("");
+
+  const [matchLevels, setMatchLevels] = useState([]);
+
+  useEffect(() => {
+    const calculateMatchLevels = () => {
+      const newMatchLevels = allGuesses.map((guess) => {
+        let localAnswerLetters = [...answer.split("")];
+        return guess.split("").map((letter, colIndex) => {
+          let level = "bad";
+          if (localAnswerLetters[colIndex] === letter) {
+            level = "perfect";
+            localAnswerLetters[colIndex] = "-";
+          } else if (localAnswerLetters.includes(letter)) {
+            level = "good";
+            const matchIndex = localAnswerLetters.indexOf(letter);
+            localAnswerLetters[matchIndex] = "-";
+          }
+          return level;
+        });
+      });
+      setMatchLevels(newMatchLevels);
+    };
+
+    calculateMatchLevels();
+  }, [allGuesses, answer]);
 
   return (
     <div>
@@ -15,17 +40,9 @@ const GameBoard = ({ allGuesses, answer }) => {
         <div key={rowIndex} className="row">
           {cols.map((col, colIndex) => {
             const letter = row.split("")[colIndex];
+            const matchLevel = matchLevels[rowIndex]?.[colIndex] || "";
             return (
-              <Square
-                key={colIndex}
-                matchLevel={
-                  answerLetters.includes(letter)
-                    ? answerLetters[colIndex] === letter
-                      ? "perfect"
-                      : "good"
-                    : rowIndex < allGuesses.length && "bad"
-                }
-              >
+              <Square key={colIndex} matchLevel={matchLevel}>
                 {letter}
               </Square>
             );
