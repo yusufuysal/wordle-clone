@@ -2,7 +2,7 @@ const GuessForm = ({ guess, setGuess, allGuesses, setAllGuesses }) => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const newGuessesArray = [...allGuesses, guess];
+    const newGuessesArray = [...allGuesses, guess.toLowerCase()];
     setAllGuesses(newGuessesArray);
 
     setGuess("");
